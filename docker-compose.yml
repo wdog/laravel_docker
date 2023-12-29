@@ -47,7 +47,7 @@ services:
     image: laravel-php
     build:
       context: ./
-      dockerfile: Dockerfile-php
+      dockerfile: Dockerfile
       args:
         - APP_ENV=${APP_ENV}
         - UID=${UID:-1000}
@@ -83,11 +83,12 @@ services:
     container_name: laravel-crontab
     build:
       context: ./
-      dockerfile: Dockerfile-cron
+      dockerfile: Dockerfile
       args:
         - APP_ENV=${APP_ENV}
         - UID=${UID:-1000}
         - GID=${GID:-1000}
+    command: ['crond','-f']
     restart: unless-stopped
     environment:
       - APP_ENV=${APP_ENV}

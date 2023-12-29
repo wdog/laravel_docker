@@ -20,22 +20,18 @@ RUN apk update && \
         jpeg-dev \
         freetype-dev \
         libjpeg-turbo-dev \
-        postgresql-dev
+        postgresql-dev \
+        libxml2-dev
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 
 RUN apk --no-cache add pcre-dev ${PHPIZE_DEPS} \
   && pecl install redis  \
-  && docker-php-ext-install -j$(nproc) bz2 gd zip pdo pdo_pgsql pgsql pdo_mysql bcmath opcache \
-  && docker-php-ext-enable redis bz2 gd zip pdo pdo_mysql pdo_pgsql bcmath opcache \
+  && docker-php-ext-install -j$(nproc) bz2 gd zip pdo pdo_pgsql pgsql pdo_mysql bcmath opcache intl xml \
+  && docker-php-ext-enable redis bz2 gd zip pdo pdo_mysql pdo_pgsql bcmath opcache intl xml \
   && apk del pcre-dev ${PHPIZE_DEPS} \
   && rm -rf /tmp/pear
-
-
-RUN apk add libxml2-dev
-RUN docker-php-ext-install xml
-RUN docker-php-ext-enable xml
 
 RUN cd /usr/local/etc/php/conf.d/ && \
   echo 'memory_limit = 4096M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
@@ -47,7 +43,7 @@ RUN adduser -G laravel -D -s /bin/sh -u ${UID} laravel
 COPY ./php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./php/datetime.ini /usr/local/etc/php/conf.d/datetime.ini
 
-# CRON
-COPY crontab /etc/crontabs/root
-RUN touch /var/log/cron.log
-ENTRYPOINT ["crond", "-f"]
+# check
+# docker-compose exec laravel-php php --ini
+
+# vi: ft=dockerfile
