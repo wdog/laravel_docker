@@ -5,12 +5,12 @@ networks:
   laravel:
 
 services:
+  # nginx
   nginx:
     image: nginx:stable-alpine
     container_name: laravel-nginx
     restart: unless-stopped
     ports:
-#      - "9088:80"
       - "9443:443"
     volumes:
       - ./src:/var/www/html
@@ -28,7 +28,6 @@ services:
     container_name: laravel-mysql
     restart: unless-stopped
     tty: true
-
     ports:
       - "4306:3306"
     volumes:
