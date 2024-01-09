@@ -22,4 +22,9 @@ DB_PASSWORD=laravel
 docker-compose --env-file=src/.env build
 # start
 docker-compose up -d
+
+# art in an alias
+# docker-compose exec laravel-php php artisan
+art migrate
+docker-compose exec laravel-php npm install
 ```
