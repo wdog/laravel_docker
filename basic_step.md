@@ -23,7 +23,12 @@ docker-compose --env-file=src/.env build
 # start
 docker-compose --env-file=src/.env up -d
 
-# art in an alias
+# or copy
+src/.env .containers
+docker-compose build
+# start
+docker-composer up -d
+# create `art` as an alias for
 # docker-compose exec laravel-php php artisan
 art migrate
 docker-compose exec laravel-php npm install
