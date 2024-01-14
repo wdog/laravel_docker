@@ -21,7 +21,7 @@ DB_PASSWORD=laravel
 # create containers
 docker-compose --env-file=src/.env build
 # start
-docker-compose up -d
+docker-compose --env-file=src/.env up -d
 
 # art in an alias
 # docker-compose exec laravel-php php artisan
